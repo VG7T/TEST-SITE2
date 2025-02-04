@@ -13,6 +13,7 @@
       align-items: center;
       font-family: Arial, sans-serif;
     }
+
     #content {
       width: 500px;
       height: 300px;
@@ -29,6 +30,11 @@
   <script>
     const content = document.getElementById("content");
     
+    // Number of iterations to run the simulation
+    const totalIterations = 100;
+    let iterations = 0;
+    
+    // Function to get a random position within the content area
     function getRandomPosition() {
       const width = content.offsetWidth;
       const height = content.offsetHeight;
@@ -37,9 +43,9 @@
       return { x, y };
     }
 
+    // Function to simulate mouse movement
     function simulateMouseMovement() {
       const { x, y } = getRandomPosition();
-      // Move mouse by simulating mouse event
       const event = new MouseEvent('mousemove', {
         bubbles: true,
         cancelable: true,
@@ -49,6 +55,7 @@
       content.dispatchEvent(event);
     }
 
+    // Function to simulate a mouse click
     function simulateClick() {
       const { x, y } = getRandomPosition();
       const clickEvent = new MouseEvent('click', {
@@ -60,13 +67,22 @@
       content.dispatchEvent(clickEvent);
     }
 
-    // Loop to randomly move the mouse and simulate clicks
-    setInterval(() => {
-      simulateMouseMovement();
-      if (Math.random() < 0.1) {  // 10% chance to click
-        simulateClick();
+    // Function to run the simulation for a set number of iterations
+    function runSimulation() {
+      if (iterations < totalIterations) {
+        simulateMouseMovement();
+        if (Math.random() < 0.1) {  // 10% chance to simulate a click
+          simulateClick();
+        }
+        iterations++;
+      } else {
+        console.log("Simulation completed!");
+        clearInterval(simulationInterval);  // Stop the interval after totalIterations
       }
-    }, 300);  // Runs every 300 milliseconds
+    }
+
+    // Start the simulation
+    const simulationInterval = setInterval(runSimulation, 300);  // Runs every 300ms
   </script>
 </body>
 </html>
