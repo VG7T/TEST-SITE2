@@ -1,35 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse Movement Simulation</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
+    #content {
+      width: 500px;
+      height: 300px;
+      background-color: lightgray;
+      position: relative;
+    }
+  </style>
+</head>
 <body>
+  <div id="content">
+    <h2>Mouse Movement Simulator</h2>
+  </div>
 
-<script>
-
-
-// Developer: Minhas Kamal
-// Randomly moves the mouse pointer, & clicks different places on the screen.
-
-import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.util.Random;
-
-public class out_of_control {
-    public static void main(String[] args) throws Exception {
-    	Robot robot = new Robot();
-    	Random random = new Random();
-    	while(true){
-    		robot.mouseMove(random.nextInt(1200), random.nextInt(700));
-    		//click(robot); // don't un-comment, may cause harm.
-    		Thread.sleep(300);
-    	}
-    }
+  <script>
+    const content = document.getElementById("content");
     
-    private static void click(Robot robot){
-        robot.mousePress(InputEvent.BUTTON1_MASK);robot.mouseRelease(InputEvent.BUTTON1_MASK);
-        robot.mousePress(InputEvent.BUTTON1_MASK);robot.mouseRelease(InputEvent.BUTTON1_MASK);
+    function getRandomPosition() {
+      const width = content.offsetWidth;
+      const height = content.offsetHeight;
+      const x = Math.floor(Math.random() * width);
+      const y = Math.floor(Math.random() * height);
+      return { x, y };
     }
-}
 
-</script>
-  
+    function simulateMouseMovement() {
+      const { x, y } = getRandomPosition();
+      // Move mouse by simulating mouse event
+      const event = new MouseEvent('mousemove', {
+        bubbles: true,
+        cancelable: true,
+        clientX: x,
+        clientY: y
+      });
+      content.dispatchEvent(event);
+    }
+
+    function simulateClick() {
+      const { x, y } = getRandomPosition();
+      const clickEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        clientX: x,
+        clientY: y
+      });
+      content.dispatchEvent(clickEvent);
+    }
+
+    // Loop to randomly move the mouse and simulate clicks
+    setInterval(() => {
+      simulateMouseMovement();
+      if (Math.random() < 0.1) {  // 10% chance to click
+        simulateClick();
+      }
+    }, 300);  // Runs every 300 milliseconds
+  </script>
 </body>
 </html>
