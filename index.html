@@ -1,55 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Randomly Moving Element</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
-    }
+<!-- Source: https://www.quora.com/What-is-your-smallest-piece-of-code-that-can-crash-the-computer/answer/Mohamed-Awad-31?srid=u2HNX -->
+<!-- The site contains JavaScript code which generates an infinite string of characters that overwhelms the device's memory. 
+     May not work on some browsers. -->
 
-    #moving-element {
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background-color: lightblue;
-      border: 2px solid #000;
-      text-align: center;
-      line-height: 100px;
-      font-size: 20px;
-    }
-  </style>
-</head>
-<body>
-
-  <div id="moving-element">Move Me!</div>
-
-  <script>
-    // Reference to the moving element
-    const movingElement = document.getElementById("moving-element");
-
-    let k = 1;
-    const moveElement = () => {
-      const i = 200 + 300 * Math.cos(k);  // Random horizontal movement
-      const j = 150 + 300 * Math.sin(k);  // Random vertical movement
-
-      // Move the element to the new position
-      movingElement.style.left = `${i}px`;
-      movingElement.style.top = `${j}px`;
-
-      // Increment k for next movement
-      k += 0.1;  // Adjust this to control the speed of the movement
-
-      // Repeat the movement every 50 milliseconds
-      setTimeout(moveElement, 50);
-    };
-
-    // Start the movement
-    moveElement();
-  </script>
-</body>
-</html>
+<a href="http://crashsafari.com">Break The Browser!</a>
