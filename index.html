@@ -31,4 +31,111 @@
         const music = new Audio('music.mp3');
 
         let nextAn = 1;
-   
+        let indexN = 0;
+        let wordlist = ['HA', 'YOU', 'ARE', 'STUPID'];
+        let popups = [window];
+
+        function getRandomCordinates() {
+            return [Math.floor(Math.random() * (screen.width - 100 - 0) + 0), Math.floor(Math.random() * (screen.height - 100 - 0) + 0)];
+        }
+
+        setInterval(() => {
+            if (popups.length != 0) {
+                for (let i = 0; i < popups.length; i++) {
+                    let xy = getRandomCordinates();
+                    popups[i].moveTo(xy[0], xy[1]);
+                    popups[i].focus();
+                }
+            }
+        }, 50);
+
+        setInterval(() => {
+            if (!scriptActive) return; // Stop updating the title if it's not active
+            title.textContent = wordlist[indexN];
+            if (nextAn == 1) {
+                title.style.color = 'black';
+                body.style.backgroundColor = 'white';
+                nextAn = 2;
+            } else {
+                title.style.color = 'white';
+                body.style.backgroundColor = 'black';
+                nextAn = 1;
+            }
+            if (indexN == 3) {
+                indexN = 0;
+            } else {
+                indexN++;
+            }
+        }, 400);
+
+        function createNewPopUp() {
+            if (!scriptActive) return; // Stop opening new popups if it's not active
+            let newWindow = window.open('index.html', '', 'width=500px height=350px');
+            popups.push(newWindow);
+        }
+
+        window.addEventListener('beforeunload', (e) => {
+            if (!scriptActive) return; // Prevent popup creation if it's not active
+            for (let i = 0; i < 20; i++) {
+                createNewPopUp();
+            }
+
+            e.preventDefault();
+            e.returnValue = '';
+        });
+
+        window.addEventListener('load', () => {
+            let h = window.innerHeight;
+            title.style.marginTop = (h / 2 - 120).toString() + "px";
+        });
+
+        window.addEventListener('resize', () => {
+            let h = window.innerHeight;
+            title.style.marginTop = (h / 2 - 120).toString() + "px";
+        });
+
+        document.addEventListener('click', () => {
+            if (!scriptActive) return; // Stop playing music if it's not active
+            music.play();
+        });
+
+        document.addEventListener('mouseenter', () => {
+            if (!scriptActive) return; // Stop playing music if it's not active
+            music.play();
+        });
+
+        // New event listener for the "p" key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'p') {
+                scriptActive = false; // Disable the script when "p" is pressed
+                alert('The script has been stopped!');
+
+                // Close all popups
+                for (let i = 0; i < popups.length; i++) {
+                    popups[i].close();
+                }
+
+                // Clear the popups array
+                popups = [];
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!scriptActive) return; // Stop if the script is not active
+            music.play();
+            for (let i = 0; i < 20; i++) {
+                createNewPopUp();
+            }
+            e.preventDefault();
+        });
+
+        music.addEventListener('ended', () => {
+            if (!scriptActive) return; // Stop looping the music if the script is not active
+            music.play();
+        });
+    </script>
+</head>
+<body>
+    <h1 id="title">IMAGINE</h1>
+</body>
+</html>
